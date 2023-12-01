@@ -85,12 +85,14 @@ export const detailedEvents = [
 
 export const loginForms = [
   {
+    id: "email",
     label: "Email",
     type: "email",
     placeholder: "vocasia@gmail.com",
     value: "",
   },
   {
+    id: "password",
     label: "Password (6 Characters)",
     type: "password",
     placeholder: "Type your password",
@@ -100,24 +102,28 @@ export const loginForms = [
 
 export const registerForms = [
   {
+    id: "firstname",
     label: "First Name",
     type: "text",
     placeholder: "First name here",
     value: "",
   },
   {
+    id: "lastname",
     label: "Last Name",
     type: "text",
     placeholder: "Last name here",
     value: "",
   },
   {
+    id: "email",
     label: "Email",
     type: "email",
     placeholder: "vocasia@gmail.com",
     value: "",
   },
   {
+    id: "password",
     label: "Password (6 Characters)",
     type: "password",
     placeholder: "Type your password",

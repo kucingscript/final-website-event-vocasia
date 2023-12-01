@@ -7,6 +7,7 @@ import Footer from "./Footer";
 import BottomLogo from "./BottomLogo";
 import ModalQR from "./ModalQR";
 import PagesHeader from "./PagesHeader";
+import ShowNotification from "./ShowNotification";
 
 export {
   Header,
@@ -18,4 +19,5 @@ export {
   BottomLogo,
   ModalQR,
   PagesHeader,
+  ShowNotification,
 };
