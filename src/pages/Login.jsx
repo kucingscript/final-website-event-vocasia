@@ -9,10 +9,6 @@ const Login = () => {
   const navigate = useNavigate();
   const [datas, setDatas] = useState({});
 
-  useEffect(() => {
-    sessionStorage.clear();
-  }, []);
-
   const handleInputChange = (event) => {
     const id = event.target.id;
     const value = event.target.value;
@@ -41,7 +37,7 @@ const Login = () => {
         });
         return;
       }
-      navigate("/");
+      navigate(-1);
     } catch (error) {
       ShowNotification({
         title: "Error",

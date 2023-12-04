@@ -5,5 +5,15 @@ import DetailedEvent from "./DetailedEvent";
 import EventCheckout from "./EventCheckout";
 import About from "./About";
 import Contact from "./Contact";
+import TableData from "./Admin/Users/TableData";
 
-export { Home, Register, Login, DetailedEvent, EventCheckout, About, Contact };
+export {
+  Home,
+  Register,
+  Login,
+  DetailedEvent,
+  EventCheckout,
+  About,
+  Contact,
+  TableData,
+};

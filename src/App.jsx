@@ -8,6 +8,7 @@ import {
   Login,
   Register,
 } from "./pages";
+import ProtectedRoutes from "./lib/ProtectedRoutes";
 
 const App = () => {
   return (
@@ -18,7 +19,11 @@ const App = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/events/:id" element={<DetailedEvent />} />
-      <Route path="/events/checkout/:id" element={<EventCheckout />} />
+
+      <Route element={<ProtectedRoutes />}>
+        <Route path="/events/checkout/:id" element={<EventCheckout />} />
+      </Route>
+
       <Route path="/*" element={<div>Page not found</div>} />
     </Routes>
   );

@@ -32,7 +32,7 @@ const Footer = () => {
           ))}
         </div>
         <div className="d-flex justify-content-center paragraph all-rights">
-          Build with &#9829; by
+          Build with &#9829; by Eventning - Vocasia FE 2
         </div>
       </div>
     </footer>

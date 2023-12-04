@@ -1,10 +1,27 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { headerLists } from "../constants";
 import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../config/firebase";
 
 const Header = ({ children }) => {
   const [activeIndex, setActiveIndex] = useState(null);
+  const [isLogin, setIsLogin] = useState(false);
+
   const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribed = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setIsLogin(true);
+      } else {
+        setIsLogin(false);
+      }
+    });
+
+    return () => unsubscribed();
+  }, []);
 
   useEffect(() => {
     const currentIndex = headerLists.findIndex(
@@ -12,6 +29,19 @@ const Header = ({ children }) => {
     );
     setActiveIndex(currentIndex);
   }, [location.pathname]);
+
+  const handleClick = async () => {
+    if (isLogin) {
+      try {
+        await auth.signOut();
+        navigate("/login");
+      } catch (error) {
+        console.error(error.message);
+      }
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <header className="header bg-navy pt-2">
@@ -38,9 +68,9 @@ const Header = ({ children }) => {
               ))}
             </div>
             <div className="d-grid">
-              <Link className="btn-navy" to="/login">
-                Sign In
-              </Link>
+              <button onClick={handleClick} className="btn-navy">
+                {isLogin ? "Sign Out" : "Sign In"}
+              </button>
             </div>
           </div>
         </div>
