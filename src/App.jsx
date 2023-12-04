@@ -7,6 +7,7 @@ import {
   Home,
   Login,
   Register,
+  TableData,
 } from "./pages";
 import ProtectedRoutes from "./lib/ProtectedRoutes";
 
@@ -22,6 +23,10 @@ const App = () => {
 
       <Route element={<ProtectedRoutes />}>
         <Route path="/events/checkout/:id" element={<EventCheckout />} />
+      </Route>
+
+      <Route path="/admin">
+        <Route path="users" element={<TableData />} />
       </Route>
 
       <Route path="/*" element={<div>Page not found</div>} />
