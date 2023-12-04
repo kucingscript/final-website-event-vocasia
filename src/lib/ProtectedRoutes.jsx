@@ -8,7 +8,7 @@ const ProtectedRoutes = () => {
 
   useEffect(() => {
     const unsubscribed = onAuthStateChanged(auth, (user) => {
-      if (user) {
+      if (user?.emailVerified) {
         setIsLogin(true);
       } else {
         setIsLogin(false);
