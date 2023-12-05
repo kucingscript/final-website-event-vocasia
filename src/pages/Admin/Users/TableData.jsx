@@ -142,7 +142,7 @@ const TableData = () => {
         <tbody>
           {isLoading ? (
             <tr>
-              <td colSpan="5">Fetching Data...</td>
+              <td colSpan="6">Fetching Data...</td>
             </tr>
           ) : (
             table.getRowModel().rows.map((row) => (
