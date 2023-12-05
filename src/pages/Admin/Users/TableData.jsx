@@ -19,6 +19,7 @@ import {
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { Trash } from "react-bootstrap-icons";
+import Swal from "sweetalert2";
 
 const TableData = () => {
   const [users, setUsers] = useState([]);
@@ -51,18 +52,25 @@ const TableData = () => {
     };
   }, []);
 
-  const handleDelete = async (id, firstname, lastname) => {
+  const handleClick = async (id, firstname, lastname) => {
     try {
-      const shouldDelete = window.confirm(
-        `Are you sure want to delete ${firstname} ${lastname}`
-      );
-      if (!shouldDelete) {
+      const shouldDelete = await Swal.fire({
+        title: "Delete User",
+        text: `Are you sure want to delete ${firstname} ${lastname} ?`,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+
+      if (!shouldDelete.isConfirmed) {
         return;
       }
 
       await deleteDoc(doc(DB, "users", id));
       ShowNotification({
-        title: "User deleted successfully",
+        title: "User Deleted",
         text: `${firstname} ${lastname} deleted successfully`,
         icon: "success",
       });
@@ -147,9 +155,11 @@ const TableData = () => {
                 ))}
                 <td>
                   <button
-                    className="btn btn-danger btn-sm"
+                    className={`btn btn-danger btn-sm ${
+                      users[row.id].role === 1 ? "disabled" : ""
+                    }`}
                     onClick={() =>
-                      handleDelete(
+                      handleClick(
                         users[row.id].id,
                         users[row.id].firstname,
                         users[row.id].lastname
