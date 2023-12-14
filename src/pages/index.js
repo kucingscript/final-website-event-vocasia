@@ -5,7 +5,11 @@ import DetailedEvent from "./DetailedEvent";
 import EventCheckout from "./EventCheckout";
 import About from "./About";
 import Contact from "./Contact";
-import TableData from "./Admin/Users/TableData";
+
+import TableDataUsers from "./Admin/Users/TableDataUsers";
+import CreateEvent from "./Admin/Events/CreateEvent";
+import TableDataEvents from "./Admin/Events/TableDataEvents";
+import UpdateEvent from "./Admin/Events/UpdateEvent";
 
 export {
   Home,
@@ -15,5 +19,8 @@ export {
   EventCheckout,
   About,
   Contact,
-  TableData,
+  TableDataUsers,
+  TableDataEvents,
+  UpdateEvent,
+  CreateEvent,
 };

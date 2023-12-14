@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import Table from "react-bootstrap/Table";
 import { DB } from "../../../config/firebase";
-import { ShowNotification } from "../../../components/";
+import { ShowNotification } from "../../../components";
 import {
   useReactTable,
   getCoreRowModel,
@@ -18,29 +18,35 @@ import {
   getPaginationRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-import { Trash } from "react-bootstrap-icons";
+import {
+  Calendar2PlusFill,
+  PencilFill,
+  TrashFill,
+} from "react-bootstrap-icons";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
-const TableData = () => {
-  const [users, setUsers] = useState([]);
+const TableDataEvents = () => {
+  const [events, setEvents] = useState([]);
   const [filtering, setFiltering] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      query(collection(DB, "users"), orderBy("firstname")),
+      query(collection(DB, "events"), orderBy("event_title")),
       (snapshot) => {
-        const userList = snapshot.docs.map((doc) => ({
+        const eventLists = snapshot.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
         }));
-        setUsers(userList);
+        setEvents(eventLists);
         setIsLoading(false);
       },
       (error) => {
         setIsLoading(false);
         ShowNotification({
-          title: "Error fetching users",
+          title: "Error fetching events",
           text: error.message,
           icon: "error",
         });
@@ -52,11 +58,11 @@ const TableData = () => {
     };
   }, []);
 
-  const handleClick = async (id, firstname, lastname) => {
+  const handleDelete = async (id, title) => {
     try {
       const shouldDelete = await Swal.fire({
-        title: "Delete User",
-        text: `Are you sure want to delete ${firstname} ${lastname} ?`,
+        title: "Delete Event",
+        text: `Are you sure want to delete ${title} ?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -68,10 +74,10 @@ const TableData = () => {
         return;
       }
 
-      await deleteDoc(doc(DB, "users", id));
+      await deleteDoc(doc(DB, "events", id));
       ShowNotification({
-        title: "User Deleted",
-        text: `${firstname} ${lastname} deleted successfully`,
+        title: "Event Deleted",
+        text: `${title} deleted successfully`,
         icon: "success",
       });
     } catch (error) {
@@ -83,15 +89,23 @@ const TableData = () => {
     }
   };
 
+  const handleUpdate = (id) => {
+    navigate(`/admin/events/update/${id}`);
+  };
+
   const ordersColumns = [
-    { header: "Firstname", accessorKey: "firstname" },
-    { header: "Lastname", accessorKey: "lastname" },
-    { header: "Email", accessorKey: "email" },
-    { header: "Role", accessorKey: "role" },
+    { header: "Title", accessorKey: "event_title" },
+    { header: "Details", accessorKey: "event_details" },
+    { header: "Price", accessorKey: "event_price" },
+    { header: "Place", accessorKey: "event_place" },
+    { header: "Time", accessorKey: "event_time" },
+    { header: "Date", accessorKey: "event_date" },
+    { header: "Speaker's Name", accessorKey: "speaker_name" },
+    { header: "Speaker's Occupation", accessorKey: "speaker_occupation" },
   ];
 
   const table = useReactTable({
-    data: users,
+    data: events,
     columns: ordersColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -110,7 +124,7 @@ const TableData = () => {
         </span>
         <input
           type="text"
-          className="form-control"
+          className="form-control border-primary"
           placeholder="Search Here..."
           aria-label="Search Here..."
           aria-describedby="basic-addon1"
@@ -119,6 +133,12 @@ const TableData = () => {
         />
       </div>
 
+      <button
+        className="btn btn-primary my-2"
+        onClick={() => navigate("/admin/events/create")}
+      >
+        <Calendar2PlusFill /> Create Event
+      </button>
       <Table responsive striped bordered hover>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -135,6 +155,7 @@ const TableData = () => {
                   )}
                 </th>
               ))}
+              <th>Event Images</th>
               <th>Action</th>
             </tr>
           ))}
@@ -154,20 +175,35 @@ const TableData = () => {
                   </td>
                 ))}
                 <td>
-                  <button
-                    className={`btn btn-danger btn-sm ${
-                      users[row.id].role === 1 ? "disabled" : ""
-                    }`}
-                    onClick={() =>
-                      handleClick(
-                        users[row.id].id,
-                        users[row.id].firstname,
-                        users[row.id].lastname
-                      )
-                    }
-                  >
-                    <Trash /> Delete
-                  </button>
+                  <a href={events[row.id].event_images}>
+                    <img
+                      src={events[row.id].event_images}
+                      alt={events[row.id].event_title}
+                      width={70}
+                      className="img-thumbnail"
+                    />
+                  </a>
+                </td>
+                <td>
+                  <div className="d-flex gap-1">
+                    <button
+                      className="btn btn-primary btn-sm"
+                      onClick={() => handleUpdate(events[row.id].id)}
+                    >
+                      <PencilFill /> Update
+                    </button>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() =>
+                        handleDelete(
+                          events[row.id].id,
+                          events[row.id].event_title
+                        )
+                      }
+                    >
+                      <TrashFill /> Delete
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))
@@ -208,4 +244,4 @@ const TableData = () => {
   );
 };
 
-export default TableData;
+export default TableDataEvents;

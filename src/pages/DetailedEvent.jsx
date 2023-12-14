@@ -49,7 +49,6 @@ const DetailedEvent = () => {
           <div className="d-flex flex-column card-event">
             <h6>Your Speaker</h6>
             <div className="d-flex align-items-center gap-3 mt-3">
-              <img src="/images/avatar.png" alt="" width="60" />
               <div>
                 <div className="speaker-name">Shayna Putri</div>
                 <span className="occupation">Designer</span>

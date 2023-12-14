@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BottomLogo, PagesHeader, ShowNotification } from "../components";
 import { registerForms } from "../constants";
 import {
@@ -14,6 +14,14 @@ const Register = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
+  const signOut = async () => {
+    await auth.signOut();
+  };
+
+  useEffect(() => {
+    signOut();
+  }, []);
+
   const handleInputChange = (event) => {
     const id = event.target.id;
     const value = event.target.value;
@@ -28,11 +36,7 @@ const Register = () => {
     const { firstname, lastname, email, password } = datas;
 
     if (!firstname || !lastname || !email || !password) {
-      ShowNotification({
-        title: "Form submission error",
-        text: "Oops! it seems like there are missing fields",
-        icon: "error",
-      });
+      throw new Error("missing fields");
     }
   };
 
@@ -62,11 +66,19 @@ const Register = () => {
       });
     } catch (error) {
       setIsLoading(false);
-      ShowNotification({
-        title: "Error",
-        text: error.message,
-        icon: "error",
-      });
+      if (error.message === "missing fields") {
+        ShowNotification({
+          title: "Form submission error",
+          text: "Oops! it seems like there are missing fields",
+          icon: "error",
+        });
+      } else {
+        ShowNotification({
+          title: "Error",
+          text: error.message,
+          icon: "error",
+        });
+      }
     }
   };
 

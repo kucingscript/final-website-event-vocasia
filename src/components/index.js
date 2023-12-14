@@ -8,6 +8,7 @@ import BottomLogo from "./BottomLogo";
 import ModalQR from "./ModalQR";
 import PagesHeader from "./PagesHeader";
 import ShowNotification from "./ShowNotification";
+import CreateEvent from "../pages/Admin/Events/CreateEvent";
 
 export {
   Header,
@@ -20,4 +21,5 @@ export {
   ModalQR,
   PagesHeader,
   ShowNotification,
+  CreateEvent,
 };

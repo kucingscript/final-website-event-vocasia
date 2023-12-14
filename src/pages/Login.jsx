@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { BottomLogo, ShowNotification } from "../components";
 import { headerLists, loginForms } from "../constants";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
 

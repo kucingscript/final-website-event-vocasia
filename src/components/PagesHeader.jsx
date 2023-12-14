@@ -1,27 +1,15 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { headerLists } from "../constants";
 import { useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
+import { useUserCredentials } from "../context";
 
 const PagesHeader = () => {
   const [activeIndex, setActiveIndex] = useState(null);
-  const [isLogin, setIsLogin] = useState(false);
+  const [userRole, setUserRole, isLogin] = useUserCredentials();
 
   const location = useLocation();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const unsubscribed = onAuthStateChanged(auth, (user) => {
-      if (user?.emailVerified) {
-        setIsLogin(true);
-      } else {
-        setIsLogin(false);
-      }
-    });
-
-    return () => unsubscribed();
-  }, []);
 
   useEffect(() => {
     const currentIndex = headerLists.findIndex(
@@ -34,6 +22,7 @@ const PagesHeader = () => {
     if (isLogin) {
       try {
         await auth.signOut();
+        setUserRole("");
         navigate("/login");
       } catch (error) {
         console.error(error.message);
@@ -50,7 +39,15 @@ const PagesHeader = () => {
           <Link to={"/"} className="navbar-brand">
             <img src="/images/logo.svg" alt="" />
           </Link>
-          <button className="navbar-toggler" type="button">
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -66,6 +63,13 @@ const PagesHeader = () => {
                   {header.label}
                 </Link>
               ))}
+              {+userRole === 1 ? (
+                <Link className="nav-link" to={"/admin/users"}>
+                  Admin
+                </Link>
+              ) : (
+                ""
+              )}
             </div>
             <div className="d-grid">
               <button onClick={handleClick} className="btn-navy">
