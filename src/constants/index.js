@@ -85,42 +85,90 @@ export const detailedEvents = [
 
 export const loginForms = [
   {
+    id: "email",
     label: "Email",
     type: "email",
     placeholder: "vocasia@gmail.com",
-    value: "",
   },
   {
+    id: "password",
     label: "Password (6 Characters)",
     type: "password",
     placeholder: "Type your password",
-    value: "",
   },
 ];
 
 export const registerForms = [
   {
+    id: "firstname",
     label: "First Name",
     type: "text",
     placeholder: "First name here",
-    value: "",
   },
   {
+    id: "lastname",
     label: "Last Name",
     type: "text",
     placeholder: "Last name here",
-    value: "",
   },
   {
+    id: "email",
     label: "Email",
     type: "email",
     placeholder: "vocasia@gmail.com",
-    value: "",
   },
   {
+    id: "password",
     label: "Password (6 Characters)",
     type: "password",
     placeholder: "Type your password",
-    value: "",
+  },
+];
+
+export const createEvents = [
+  {
+    id: "event_title",
+    label: "Event Title",
+    type: "text",
+  },
+  {
+    id: "event_details",
+    label: "Event Details",
+    type: "text",
+  },
+  {
+    id: "event_price",
+    label: "Event Price",
+    type: "number",
+  },
+  {
+    id: "event_place",
+    label: "Event Place",
+    type: "text",
+  },
+  {
+    id: "event_time",
+    label: "Event Time",
+    type: "text",
+  },
+  {
+    id: "event_date",
+    label: "Event Date",
+    type: "date",
+  },
+  {
+    id: "event_images",
+    label: "Event Images",
+    type: "file",
+  },
+  {
+    id: "speaker_name",
+    label: "Speaker's Name",
+    type: "text",
+  },
+  {
+    id: "speaker_occupation",
+    label: "Speaker's Occupation",
+    type: "text",
   },
 ];
