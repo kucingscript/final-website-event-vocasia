@@ -115,7 +115,7 @@ const UpdateEvent = () => {
       <Row className="d-flex justify-content-center align-items-center my-4">
         <Col md={8} className="shadow pt-3 pb-4 px-md-3">
           <h2 className="text-center pb-2">Update Event</h2>
-          <form onSubmit={handleFormSubmit}>
+          <form onSubmit={handleFormSubmit} autoComplete="off">
             {createEvents.map((event) =>
               event.type === "file" ? (
                 <div key={event.id} className="col col-md-6">
@@ -132,6 +132,19 @@ const UpdateEvent = () => {
                     placeholder={event.label}
                     onChange={handleFileChange}
                   />
+                </div>
+              ) : event.id === "event_details" ? (
+                <div className="mb-2" key={event.id}>
+                  <label htmlFor="event_details" className="form-label">
+                    &nbsp; Event Details
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id="event_details"
+                    defaultValue={events[event.id]}
+                    onChange={handleInputChange}
+                    rows="3"
+                  ></textarea>
                 </div>
               ) : (
                 <div className="form-floating mb-2" key={event.id}>

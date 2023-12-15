@@ -145,7 +145,8 @@ const TableDataEvents = () => {
                   )}
                 </th>
               ))}
-              <th>Event Images</th>
+              <th>Details</th>
+              <th>Images</th>
               <th>Action</th>
             </tr>
           ))}
@@ -164,12 +165,13 @@ const TableDataEvents = () => {
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
+                <td>{events[row.id].event_details.substr(0, 30)}...</td>
                 <td>
                   <a href={events[row.id].event_images}>
                     <img
                       src={events[row.id].event_images}
                       alt={events[row.id].event_title}
-                      width={70}
+                      width={100}
                       className="img-thumbnail"
                     />
                   </a>

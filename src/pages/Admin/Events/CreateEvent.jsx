@@ -96,21 +96,37 @@ const CreateEvent = () => {
       <Row className="d-flex justify-content-center align-items-center my-4">
         <Col md={8} className="shadow pt-3 pb-4 px-md-3">
           <h2 className="text-center pb-2">Create Event</h2>
-          <form onSubmit={handleFormSubmit}>
-            {createEvents.map((event) => (
-              <div className="form-floating mb-2" key={event.id}>
-                <input
-                  id={event.id}
-                  type={event.type}
-                  className="form-control"
-                  placeholder={event.label}
-                  onChange={
-                    event.type === "file" ? handleFileChange : handleInputChange
-                  }
-                />
-                <label>{event.label}</label>
-              </div>
-            ))}
+          <form onSubmit={handleFormSubmit} autoComplete="off">
+            {createEvents.map((event) =>
+              event.id === "event_details" ? (
+                <div className="mb-2" key={event.id}>
+                  <label htmlFor="event_details" className="form-label">
+                    &nbsp; Event Details
+                  </label>
+                  <textarea
+                    className="form-control"
+                    id="event_details"
+                    onChange={handleInputChange}
+                    rows="3"
+                  ></textarea>
+                </div>
+              ) : (
+                <div className="form-floating mb-2" key={event.id}>
+                  <input
+                    id={event.id}
+                    type={event.type}
+                    className="form-control"
+                    placeholder={event.label}
+                    onChange={
+                      event.type === "file"
+                        ? handleFileChange
+                        : handleInputChange
+                    }
+                  />
+                  <label>{event.label}</label>
+                </div>
+              )
+            )}
 
             <div className="d-flex gap-2 pt-3 flex-wrap">
               <button

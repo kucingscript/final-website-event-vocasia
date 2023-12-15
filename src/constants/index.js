@@ -127,13 +127,12 @@ export const registerForms = [
 
 export const ordersEvColumns = [
   { header: "Title", accessorKey: "event_title" },
-  { header: "Details", accessorKey: "event_details" },
   { header: "Price", accessorKey: "event_price" },
   { header: "Place", accessorKey: "event_place" },
   { header: "Time", accessorKey: "event_time" },
   { header: "Date", accessorKey: "event_date" },
-  { header: "Speaker's Name", accessorKey: "speaker_name" },
-  { header: "Speaker's Occupation", accessorKey: "speaker_occupation" },
+  { header: "Announcer", accessorKey: "speaker_name" },
+  { header: "Occupation", accessorKey: "speaker_occupation" },
 ];
 
 export const createEvents = [

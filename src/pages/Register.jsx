@@ -102,6 +102,7 @@ const Register = () => {
             <div className="col-md-6">
               <form
                 onSubmit={handleFormSubmit}
+                autoComplete="off"
                 className="form-login d-flex flex-column mt-4 mt-md-0"
               >
                 {registerForms.map((register, index) => (

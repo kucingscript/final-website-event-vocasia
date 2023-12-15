@@ -644,6 +644,14 @@ footer .all-rights {
   .checkout .event-details .total-price {
     margin: 0 auto;
   }
+
+  table th {
+    font-size: 15px !important;
+  }
+
+  table tr td {
+    font-size: 14px !important;
+  }
 }
 .login.header {
   height: auto;
