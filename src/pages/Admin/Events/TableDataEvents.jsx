@@ -25,6 +25,7 @@ import {
 } from "react-bootstrap-icons";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { ordersEvColumns } from "../../../constants";
 
 const TableDataEvents = () => {
   const [events, setEvents] = useState([]);
@@ -93,20 +94,9 @@ const TableDataEvents = () => {
     navigate(`/admin/events/update/${id}`);
   };
 
-  const ordersColumns = [
-    { header: "Title", accessorKey: "event_title" },
-    { header: "Details", accessorKey: "event_details" },
-    { header: "Price", accessorKey: "event_price" },
-    { header: "Place", accessorKey: "event_place" },
-    { header: "Time", accessorKey: "event_time" },
-    { header: "Date", accessorKey: "event_date" },
-    { header: "Speaker's Name", accessorKey: "speaker_name" },
-    { header: "Speaker's Occupation", accessorKey: "speaker_occupation" },
-  ];
-
   const table = useReactTable({
     data: events,
-    columns: ordersColumns,
+    columns: ordersEvColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getFilteredRowModel: getFilteredRowModel(),

@@ -1,12 +1,17 @@
 import { Col, Container, Row } from "react-bootstrap";
-import { createEvents } from "../../../constants";
+import { createEvents, requiredFields } from "../../../constants";
 import { useNavigate } from "react-router-dom";
-import { Calendar2PlusFill, GearFill, TrashFill } from "react-bootstrap-icons";
+import {
+  Calendar2PlusFill,
+  HouseDoorFill,
+  TrashFill,
+} from "react-bootstrap-icons";
 import { ShowNotification } from "../../../components/";
 import { useEffect, useState } from "react";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { DB, storage } from "../../../config/firebase";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { imageValidation } from "../../../utils";
 
 const CreateEvent = () => {
   const navigate = useNavigate();
@@ -15,54 +20,18 @@ const CreateEvent = () => {
   const [percentage, setPercentage] = useState(null);
 
   const handleInputChange = (event) => {
-    const id = event.target.id;
-    const value = event.target.value;
-
-    setDatas({
-      ...datas,
-      [id]: value,
-    });
+    const { id, value } = event.target;
+    setDatas((prev) => ({ ...prev, [id]: value }));
   };
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
+    const isValid = imageValidation(selectedFile);
 
-    if (selectedFile) {
-      const allowedTypes = ["image/jpeg", "image/png"];
-      if (!allowedTypes.includes(selectedFile.type)) {
-        ShowNotification({
-          title: "Error Uploading Images",
-          text: "Please select a valid image file (JPEG, PNG)",
-          icon: "error",
-        });
-        return;
-      }
+    if (isValid) {
+      setFile(selectedFile);
     }
-
-    const maxSizeInBytes = 2 * 1024 * 1024;
-    if (selectedFile.size > maxSizeInBytes) {
-      ShowNotification({
-        title: "Error Uploading Images",
-        text: "File size exceeds the maximum limit of 5 MB",
-        icon: "error",
-      });
-      return;
-    }
-
-    setFile(selectedFile);
   };
-
-  const requiredFields = [
-    "event_title",
-    "event_details",
-    "event_price",
-    "event_place",
-    "event_time",
-    "event_date",
-    "event_images",
-    "speaker_name",
-    "speaker_occupation",
-  ];
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -143,23 +112,26 @@ const CreateEvent = () => {
               </div>
             ))}
 
-            <div className="d-flex gap-2 pt-3 ">
+            <div className="d-flex gap-2 pt-3 flex-wrap">
               <button
-                className="btn btn-success"
+                className="btn btn-success d-flex align-items-center gap-1"
                 type="button"
                 onClick={() => navigate("/admin/events")}
               >
-                <GearFill /> Back to Admin
+                <HouseDoorFill /> Back to Admin
               </button>
               <button
-                className={`btn btn-primary ${
+                className={`btn btn-primary d-flex align-items-center gap-1 ${
                   percentage !== null && percentage < 100 ? "disabled" : ""
                 }`}
                 type="submit"
               >
                 <Calendar2PlusFill /> Create Event
               </button>
-              <button className="btn btn-danger" type="reset">
+              <button
+                className="btn btn-danger d-flex align-items-center gap-1"
+                type="reset"
+              >
                 <TrashFill /> Clear Event
               </button>
             </div>

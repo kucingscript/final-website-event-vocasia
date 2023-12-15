@@ -125,6 +125,17 @@ export const registerForms = [
   },
 ];
 
+export const ordersEvColumns = [
+  { header: "Title", accessorKey: "event_title" },
+  { header: "Details", accessorKey: "event_details" },
+  { header: "Price", accessorKey: "event_price" },
+  { header: "Place", accessorKey: "event_place" },
+  { header: "Time", accessorKey: "event_time" },
+  { header: "Date", accessorKey: "event_date" },
+  { header: "Speaker's Name", accessorKey: "speaker_name" },
+  { header: "Speaker's Occupation", accessorKey: "speaker_occupation" },
+];
+
 export const createEvents = [
   {
     id: "event_title",
@@ -171,4 +182,16 @@ export const createEvents = [
     label: "Speaker's Occupation",
     type: "text",
   },
+];
+
+export const requiredFields = [
+  "event_title",
+  "event_details",
+  "event_price",
+  "event_place",
+  "event_time",
+  "event_date",
+  "event_images",
+  "speaker_name",
+  "speaker_occupation",
 ];
