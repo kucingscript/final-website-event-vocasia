@@ -10,13 +10,13 @@ const Footer = () => {
     <footer className="footer bg-navy">
       <div className="container">
         <a href="index.html">
-          <img src="/images/logo.svg" alt="" />
+          <img src="/images/logo.svg" alt="nusantarafest-logo" />
         </a>
         <div className="mt-3 d-flex flex-row flex-wrap footer-content align-items-baseline">
           <p className="paragraph">
-            Semina adalah tempat di mana <br className="d-md-block d-none" />{" "}
-            anda dapat mencari event sesuai <br className="d-md-block d-none" />{" "}
-            dengan minat & terdekat.
+            NusantaraFest adalah tempat di mana{" "}
+            <br className="d-md-block d-none" /> anda dapat mencari event sesuai{" "}
+            <br className="d-md-block d-none" /> dengan minat & preferensi.
           </p>
           {footerLinks.map((foots, index1) => (
             <div className="d-flex flex-column footer-links" key={index1}>

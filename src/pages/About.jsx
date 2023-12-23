@@ -4,10 +4,10 @@ const About = () => {
   return (
     <>
       <Header>
-        <Hero />
+        <Hero btnText={"About Us"} />
       </Header>
 
-      <section className="brand-partner text-center">
+      <section className="brand-partner text-center" id="grow-today">
         <p>This website was developed by 5 superb people</p>
         <div className="d-flex flex-row flex-wrap justify-content-center align-items-center">
           <p className="fs-4">Kucingscript</p>

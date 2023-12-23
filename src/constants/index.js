@@ -68,6 +68,14 @@ export const footerLinks = [
   },
 ];
 
+export const brandLogo = [
+  { src: "apple-111.svg", alt: "apple" },
+  { src: "Adobe.svg", alt: "adobe" },
+  { src: "slack-21.svg", alt: "slack" },
+  { src: "spotify-11.svg", alt: "spotify" },
+  { src: "google-2015.svg", alt: "google" },
+];
+
 export const detailedEvents = [
   {
     title:

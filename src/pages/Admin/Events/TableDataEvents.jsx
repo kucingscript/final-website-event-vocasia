@@ -20,12 +20,14 @@ import {
 } from "@tanstack/react-table";
 import {
   Calendar2PlusFill,
+  HouseDoorFill,
   PencilFill,
   TrashFill,
 } from "react-bootstrap-icons";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { ordersEvColumns } from "../../../constants";
+import { Tooltip } from "react-tooltip";
 
 const TableDataEvents = () => {
   const [events, setEvents] = useState([]);
@@ -154,7 +156,7 @@ const TableDataEvents = () => {
         <tbody>
           {isLoading ? (
             <tr>
-              <td colSpan="6">Fetching Data...</td>
+              <td colSpan="11">Fetching Events...</td>
             </tr>
           ) : (
             table.getRowModel().rows.map((row) => (
@@ -181,8 +183,12 @@ const TableDataEvents = () => {
                     <button
                       className="btn btn-primary btn-sm"
                       onClick={() => handleUpdate(events[row.id].id)}
+                      data-tooltip-id="update"
+                      data-tooltip-content="Update Event"
+                      data-tooltip-place="bottom"
                     >
-                      <PencilFill /> Update
+                      <PencilFill />
+                      <Tooltip id="update" />
                     </button>
                     <button
                       className="btn btn-danger btn-sm"
@@ -192,8 +198,12 @@ const TableDataEvents = () => {
                           events[row.id].event_title
                         )
                       }
+                      data-tooltip-id="delete"
+                      data-tooltip-content="Delete Event"
+                      data-tooltip-place="bottom"
                     >
-                      <TrashFill /> Delete
+                      <TrashFill />
+                      <Tooltip id="delete" />
                     </button>
                   </div>
                 </td>
@@ -202,15 +212,21 @@ const TableDataEvents = () => {
           )}
         </tbody>
       </Table>
-      <div className="d-flex gap-1 my-2">
+      <div className="d-flex gap-1 my-2 flex-wrap">
         <button
-          className="btn btn-primary btn-sm lg:btn-md"
+          className="btn btn-primary btn-sm"
+          onClick={() => navigate("/admin/dashboard")}
+        >
+          <HouseDoorFill className="mb-1" /> Back to Admin
+        </button>
+        <button
+          className="btn btn-primary btn-sm"
           onClick={() => table.setPageIndex(0)}
         >
           First Page
         </button>
         <button
-          className={`btn btn-primary btn-sm sm:btn-lg ${
+          className={`btn btn-primary btn-sm ${
             !table.getCanPreviousPage() ? "disabled" : ""
           }`}
           onClick={() => table.previousPage()}
@@ -218,7 +234,7 @@ const TableDataEvents = () => {
           Previous Page
         </button>
         <button
-          className={`btn btn-primary btn-sm sm:btn-lg ${
+          className={`btn btn-primary btn-sm ${
             !table.getCanNextPage() ? "disabled" : ""
           }`}
           onClick={() => table.nextPage()}
@@ -226,7 +242,7 @@ const TableDataEvents = () => {
           Next Page
         </button>
         <button
-          className="btn btn-primary btn-sm sm:btn-lg"
+          className="btn btn-primary btn-sm"
           onClick={() => table.setPageIndex(table.getPageCount() - 1)}
         >
           Last Page

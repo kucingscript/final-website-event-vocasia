@@ -3,7 +3,6 @@ import {
   deleteDoc,
   doc,
   onSnapshot,
-  orderBy,
   query,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
@@ -23,27 +22,27 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 
-const TableDataUsers = () => {
-  const [users, setUsers] = useState([]);
+const TableDataComments = () => {
+  const [comments, setComments] = useState([]);
   const [filtering, setFiltering] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      query(collection(DB, "users"), orderBy("firstname")),
+      query(collection(DB, "comments")),
       (snapshot) => {
-        const userLists = snapshot.docs.map((doc) => ({
+        const commentLists = snapshot.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
         }));
-        setUsers(userLists);
+        setComments(commentLists);
         setIsLoading(false);
       },
       (error) => {
         setIsLoading(false);
         ShowNotification({
-          title: "Error fetching users",
+          title: "Error fetching comments",
           text: error.message,
           icon: "error",
         });
@@ -55,11 +54,11 @@ const TableDataUsers = () => {
     };
   }, []);
 
-  const handleClick = async (id, firstname, lastname) => {
+  const handleClick = async (id, userComment) => {
     try {
       const shouldDelete = await Swal.fire({
-        title: "Delete User",
-        text: `Are you sure want to delete ${firstname} ${lastname} ?`,
+        title: "Delete Comment",
+        text: `Are you sure want to delete comment from ${userComment}?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -71,10 +70,10 @@ const TableDataUsers = () => {
         return;
       }
 
-      await deleteDoc(doc(DB, "users", id));
+      await deleteDoc(doc(DB, "comments", id));
       ShowNotification({
-        title: "User Deleted",
-        text: `${firstname} ${lastname} deleted successfully`,
+        title: "Comment Deleted",
+        text: `Comment deleted successfully`,
         icon: "success",
       });
     } catch (error) {
@@ -87,13 +86,12 @@ const TableDataUsers = () => {
   };
 
   const ordersColumns = [
-    { header: "Firstname", accessorKey: "firstname" },
-    { header: "Lastname", accessorKey: "lastname" },
-    { header: "Email", accessorKey: "email" },
+    { header: "Email", accessorKey: "userEmail" },
+    { header: "Comment", accessorKey: "userComment" },
   ];
 
   const table = useReactTable({
-    data: users,
+    data: comments,
     columns: ordersColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -137,7 +135,6 @@ const TableDataUsers = () => {
                   )}
                 </th>
               ))}
-              <th>Role</th>
               <th>Action</th>
             </tr>
           ))}
@@ -145,7 +142,7 @@ const TableDataUsers = () => {
         <tbody>
           {isLoading ? (
             <tr>
-              <td colSpan="6">Fetching Users...</td>
+              <td colSpan="4">Fetching Comments...</td>
             </tr>
           ) : (
             table.getRowModel().rows.map((row) => (
@@ -156,24 +153,20 @@ const TableDataUsers = () => {
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
-                <td>{users[row.id].role === 1 ? "Admin" : "User"}</td>
                 <td>
                   <button
-                    className={`btn btn-danger btn-sm ${
-                      users[row.id].role === 1 ? "disabled" : ""
-                    }`}
+                    className="btn btn-danger btn-sm"
                     onClick={() =>
                       handleClick(
-                        users[row.id].id,
-                        users[row.id].firstname,
-                        users[row.id].lastname
+                        comments[row.id].id,
+                        comments[row.id].userEmail
                       )
                     }
                     data-tooltip-id="delete"
-                    data-tooltip-content="Delete User"
+                    data-tooltip-content="Delete Comment"
                     data-tooltip-place="bottom"
                   >
-                    <TrashFill /> Delete
+                    <TrashFill />
                     <Tooltip id="delete" />
                   </button>
                 </td>
@@ -222,4 +215,4 @@ const TableDataUsers = () => {
   );
 };
 
-export default TableDataUsers;
+export default TableDataComments;

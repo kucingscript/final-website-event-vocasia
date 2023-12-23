@@ -25,3 +25,10 @@ export const imageValidation = (selectedFile) => {
 
   return true;
 };
+
+export const dateFormatter = (event_date) => {
+  const dateObject = new Date(event_date);
+
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return dateObject.toLocaleDateString("id-ID", options);
+};

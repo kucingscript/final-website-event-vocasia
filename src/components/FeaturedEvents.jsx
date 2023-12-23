@@ -1,7 +1,43 @@
 import { Link } from "react-router-dom";
-import { featuredEvents } from "../constants";
+import { useEffect, useState } from "react";
+import { ShowNotification } from "../components";
+import { collection, getDocs, limit, query } from "firebase/firestore";
+import { DB } from "../config/firebase";
+import { dateFormatter } from "../utils";
 
 const FeaturedEvents = ({ text }) => {
+  const [events, setEvents] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [eventsLimit, setEventsLimit] = useState(false);
+
+  const fetchEventsData = async () => {
+    try {
+      setIsLoading(true);
+      const customQuery = query(
+        collection(DB, "events"),
+        limit(eventsLimit ? undefined : 4)
+      );
+      const querySnapshot = await getDocs(customQuery);
+      const eventsData = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setEvents(eventsData);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      ShowNotification({
+        title: "Error",
+        text: error.message,
+        icon: "error",
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchEventsData();
+  }, [eventsLimit]);
+
   return (
     <section className="grow-today">
       <div className="container">
@@ -10,23 +46,48 @@ const FeaturedEvents = ({ text }) => {
         </div>
         <div className="title">Featured Events</div>
         <div className="mt-5 row gap">
-          {featuredEvents.map((event, index) => (
-            <div className="col-lg-3 col-md-6 col-12" key={index}>
-              <div className="card-grow h-100">
-                <span className="badge-pricing">{event.pricing}</span>
-                <img src={`/images/card-${index + 1}.png`} alt="" />
-                <div className="card-content">
-                  <div className="card-title">{event.title}</div>
-                  <div className="card-subtitle">{event.subtitle}</div>
-                  <div className="description">{event.description}</div>
-                  <Link
-                    to={`/events/${index + 1}`}
-                    className="stretched-link"
-                  ></Link>
+          {isLoading ? (
+            <h4>Fetching Events...</h4>
+          ) : (
+            events.map((event, index) => {
+              const {
+                event_title,
+                event_price,
+                event_place,
+                event_date,
+                event_images,
+                speaker_occupation,
+              } = event;
+              return (
+                <div className="col-lg-3 col-md-6 col-12" key={index}>
+                  <div className="card-grow h-100">
+                    <span className="badge-pricing">{event_price} K</span>
+                    <img src={event_images} alt={event_title} />
+                    <div className="card-content">
+                      <div className="card-title">{event_title}</div>
+                      <div className="card-subtitle">{speaker_occupation}</div>
+                      <div className="description">
+                        {event_place}, {dateFormatter(event_date)}
+                      </div>
+                      <Link
+                        to={`/events/${event.id}`}
+                        className="stretched-link"
+                      ></Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              );
+            })
+          )}
+
+          <div className="d-flex justify-content-center">
+            <button
+              className="btn-green"
+              onClick={() => setEventsLimit(!eventsLimit)}
+            >
+              {eventsLimit ? "Hide" : "Show All"}
+            </button>
+          </div>
         </div>
       </div>
     </section>

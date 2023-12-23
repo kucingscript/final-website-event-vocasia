@@ -49,13 +49,11 @@ const CreateEvent = () => {
         ...datas,
         timestamp: serverTimestamp(),
       });
-      setDatas("");
-      navigate("/admin/events");
       ShowNotification({
         title: "Event created successfully",
         text: "New event has been successfully created",
         icon: "success",
-      });
+      }).then(() => navigate("/admin/events"));
     } catch (error) {
       ShowNotification({
         title: "Error",

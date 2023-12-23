@@ -68,13 +68,11 @@ const UpdateEvent = () => {
       const eventDocRef = doc(collection(DB, "events"), eventId);
       await updateDoc(eventDocRef, events);
 
-      setEvents("");
-      navigate("/admin/events");
       ShowNotification({
         title: "Event updated successfully",
         text: "New event has been successfully updated",
         icon: "success",
-      });
+      }).then(() => navigate("/admin/events"));
     } catch (error) {
       ShowNotification({
         title: "Error",

@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <>
       <Header>
-        <Hero />
+        <Hero btnText={"Browse Now"} />
       </Header>
       <Brand />
       <FeaturedEvents text={"Grow Today"} />

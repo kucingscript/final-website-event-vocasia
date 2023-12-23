@@ -1,13 +1,18 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BottomLogo, ShowNotification } from "../components";
 import { headerLists, loginForms } from "../constants";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
+import ModalForgotPassword from "../components/ModalForgotPassword";
 
 const Login = () => {
-  const navigate = useNavigate();
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const [datas, setDatas] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (event) => {
     const id = event.target.id;
@@ -23,6 +28,7 @@ const Login = () => {
     event.preventDefault();
 
     try {
+      setIsLoading(true);
       const res = await signInWithEmailAndPassword(
         auth,
         datas.email,
@@ -37,8 +43,10 @@ const Login = () => {
         });
         return;
       }
-      navigate(-1);
+      setIsLoading(false);
+      window.location.href = "/";
     } catch (error) {
+      setIsLoading(false);
       ShowNotification({
         title: "Error",
         text: error.message,
@@ -53,7 +61,7 @@ const Login = () => {
         <nav className="container navbar navbar-expand-lg navbar-dark">
           <div className="container-fluid">
             <a className="navbar-brand" href="index.html">
-              <img src="/images/logo.svg" alt="" />
+              <img src="/images/logo.svg" alt="nusantarafest-logo" />
             </a>
             <button className="navbar-toggler" type="button">
               <span className="navbar-toggler-icon"></span>
@@ -96,13 +104,22 @@ const Login = () => {
                   />
                 </div>
               ))}
-              <div className="d-grid mt-2 gap-3">
+              <div className="d-grid mt-2 gap-2">
                 <button type="submit" className="btn-green">
-                  Sign In
+                  {isLoading ? "Redirecting..." : "Sign In"}
                 </button>
                 <Link to={"/register"} className="btn-navy">
                   Create New Account
                 </Link>
+                <div
+                  className="d-flex justify-content-start"
+                  style={{ cursor: "pointer" }}
+                  onClick={handleShow}
+                >
+                  &nbsp;
+                  <span className="text-primary">Forgot Password?</span>
+                </div>
+                <ModalForgotPassword show={show} handleClose={handleClose} />
               </div>
             </form>
           </div>

@@ -37,7 +37,7 @@ const PagesHeader = () => {
       <nav className="container navbar navbar-expand-lg navbar-dark">
         <div className="container-fluid">
           <Link to={"/"} className="navbar-brand">
-            <img src="/images/logo.svg" alt="" />
+            <img src="/images/logo.svg" alt="nusantarafest-logo" />
           </Link>
           <button
             className="navbar-toggler"
@@ -64,7 +64,7 @@ const PagesHeader = () => {
                 </Link>
               ))}
               {+userRole === 1 ? (
-                <Link className="nav-link" to={"/admin/users"}>
+                <Link className="nav-link" to={"/admin/dashboard"}>
                   Admin
                 </Link>
               ) : (

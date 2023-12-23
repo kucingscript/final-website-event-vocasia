@@ -1,4 +1,4 @@
-const Hero = () => {
+const Hero = ({ btnText }) => {
   return (
     <>
       <div className="hero">
@@ -11,17 +11,17 @@ const Hero = () => {
         <p className="hero-paragraph">
           Kami menyediakan berbagai acara terbaik untuk membantu
           <br className="d-none d-lg-block" />
-          anda dalam meningkatkan skills di bidang teknologi
+          Anda dalam meningkatkan skills di berbagai bidang
         </p>
         <a href="#grow-today" className="btn-green">
-          Browse Now
+          {btnText}
         </a>
       </div>
 
       <div className="d-flex flex-row flex-nowrap justify-content-center align-items-center gap-5 header-image">
-        <img src="/images/1.png" alt="" className="img-1" />
-        <img src="/images/2.png" alt="" className="img-2" />
-        <img src="/images/1.png" alt="" className="img-1" />
+        <img src="/images/1.png" alt="nusantarafest-1" className="img-1" />
+        <img src="/images/2.png" alt="nusantarafest-2" className="img-2" />
+        <img src="/images/1.png" alt="nusantarafest-3" className="img-1" />
       </div>
     </>
   );

@@ -8,7 +8,7 @@ const Stories = () => {
         <div className="d-flex flex-row justify-content-center align-items-center container">
           <img
             src="/images/story.png"
-            alt=""
+            alt="nusantarafest-story"
             className="d-none d-lg-block"
             width="515"
           />

@@ -5,9 +5,11 @@ import {
   onSnapshot,
   orderBy,
   query,
+  updateDoc,
 } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
+import { Tooltip } from "react-tooltip";
 import Table from "react-bootstrap/Table";
 import { DB } from "../../../config/firebase";
 import { ShowNotification } from "../../../components";
@@ -18,32 +20,31 @@ import {
   getPaginationRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-import { HouseDoorFill, TrashFill } from "react-bootstrap-icons";
+import { CheckLg, HouseDoorFill, TrashFill, XLg } from "react-bootstrap-icons";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
-import { Tooltip } from "react-tooltip";
 
-const TableDataUsers = () => {
-  const [users, setUsers] = useState([]);
+const TableDataOrders = () => {
+  const [orders, setOrders] = useState([]);
   const [filtering, setFiltering] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onSnapshot(
-      query(collection(DB, "users"), orderBy("firstname")),
+      query(collection(DB, "orders"), orderBy("timestamp")),
       (snapshot) => {
-        const userLists = snapshot.docs.map((doc) => ({
+        const orderLists = snapshot.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id,
         }));
-        setUsers(userLists);
+        setOrders(orderLists);
         setIsLoading(false);
       },
       (error) => {
         setIsLoading(false);
         ShowNotification({
-          title: "Error fetching users",
+          title: "Error fetching orders",
           text: error.message,
           icon: "error",
         });
@@ -55,11 +56,11 @@ const TableDataUsers = () => {
     };
   }, []);
 
-  const handleClick = async (id, firstname, lastname) => {
+  const handleDelete = async (id) => {
     try {
       const shouldDelete = await Swal.fire({
-        title: "Delete User",
-        text: `Are you sure want to delete ${firstname} ${lastname} ?`,
+        title: "Delete Order",
+        text: `Are you sure want to delete this order?`,
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -71,10 +72,10 @@ const TableDataUsers = () => {
         return;
       }
 
-      await deleteDoc(doc(DB, "users", id));
+      await deleteDoc(doc(DB, "orders", id));
       ShowNotification({
-        title: "User Deleted",
-        text: `${firstname} ${lastname} deleted successfully`,
+        title: "Order Deleted",
+        text: `Order deleted successfully`,
         icon: "success",
       });
     } catch (error) {
@@ -86,14 +87,32 @@ const TableDataUsers = () => {
     }
   };
 
+  const handleToggleComplete = async (id, orderPurchased) => {
+    try {
+      await updateDoc(doc(DB, "orders", id), {
+        isPurchased: !orderPurchased,
+      });
+    } catch (error) {
+      ShowNotification({
+        title: "Error",
+        text: error.message,
+        icon: "error",
+      });
+    }
+  };
+
   const ordersColumns = [
-    { header: "Firstname", accessorKey: "firstname" },
-    { header: "Lastname", accessorKey: "lastname" },
-    { header: "Email", accessorKey: "email" },
+    { header: "Title", accessorKey: "title" },
+    { header: "Place", accessorKey: "place" },
+    { header: "Price", accessorKey: "price" },
+    { header: "Time", accessorKey: "time" },
+    { header: "Date", accessorKey: "date" },
+    { header: "Order By", accessorKey: "name" },
+    { header: "Order Email", accessorKey: "email" },
   ];
 
   const table = useReactTable({
-    data: users,
+    data: orders,
     columns: ordersColumns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -137,7 +156,7 @@ const TableDataUsers = () => {
                   )}
                 </th>
               ))}
-              <th>Role</th>
+              <th>isPurchased</th>
               <th>Action</th>
             </tr>
           ))}
@@ -145,7 +164,7 @@ const TableDataUsers = () => {
         <tbody>
           {isLoading ? (
             <tr>
-              <td colSpan="6">Fetching Users...</td>
+              <td colSpan="10">Fetching Orders...</td>
             </tr>
           ) : (
             table.getRowModel().rows.map((row) => (
@@ -156,24 +175,54 @@ const TableDataUsers = () => {
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </td>
                 ))}
-                <td>{users[row.id].role === 1 ? "Admin" : "User"}</td>
+                <td>
+                  <div className="d-flex justify-content-between">
+                    {orders[row.id].isPurchased ? "true" : "false"}
+                    <button
+                      onClick={() =>
+                        handleToggleComplete(
+                          orders[row.id].id,
+                          orders[row.id].isPurchased
+                        )
+                      }
+                      className={`btn btn-sm ${
+                        orders[row.id].isPurchased
+                          ? "btn-secondary"
+                          : "btn-primary"
+                      }`}
+                    >
+                      {orders[row.id].isPurchased ? (
+                        <>
+                          <XLg
+                            data-tooltip-id="close"
+                            data-tooltip-content="Mark as not Purchased"
+                            data-tooltip-place="bottom"
+                          />
+                          <Tooltip id="close" />
+                        </>
+                      ) : (
+                        <>
+                          <CheckLg
+                            data-tooltip-id="check"
+                            data-tooltip-content="Mark as Purchased"
+                            data-tooltip-place="bottom"
+                          />
+                          <Tooltip id="check" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                </td>
                 <td>
                   <button
-                    className={`btn btn-danger btn-sm ${
-                      users[row.id].role === 1 ? "disabled" : ""
-                    }`}
-                    onClick={() =>
-                      handleClick(
-                        users[row.id].id,
-                        users[row.id].firstname,
-                        users[row.id].lastname
-                      )
-                    }
-                    data-tooltip-id="delete"
-                    data-tooltip-content="Delete User"
-                    data-tooltip-place="bottom"
+                    className="btn btn-danger btn-sm"
+                    onClick={() => handleDelete(orders[row.id].id)}
                   >
-                    <TrashFill /> Delete
+                    <TrashFill
+                      data-tooltip-id="delete"
+                      data-tooltip-content="Delete Order"
+                      data-tooltip-place="bottom"
+                    />
                     <Tooltip id="delete" />
                   </button>
                 </td>
@@ -222,4 +271,4 @@ const TableDataUsers = () => {
   );
 };
 
-export default TableDataUsers;
+export default TableDataOrders;

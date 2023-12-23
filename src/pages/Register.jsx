@@ -58,12 +58,11 @@ const Register = () => {
         timestamp: serverTimestamp(),
       });
       setIsLoading(false);
-      navigate("/login");
       ShowNotification({
         title: "Account created",
         text: "Your account has been successfully created. Please check your email for further instructions",
         icon: "success",
-      });
+      }).then(() => navigate("/login"));
     } catch (error) {
       setIsLoading(false);
       if (error.message === "missing fields") {
