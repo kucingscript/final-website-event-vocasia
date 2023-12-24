@@ -63,7 +63,15 @@ const Login = () => {
             <a className="navbar-brand" href="index.html">
               <img src="/images/logo.svg" alt="nusantarafest-logo" />
             </a>
-            <button className="navbar-toggler" type="button">
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNavAltMarkup"
+              aria-controls="navbarNavAltMarkup"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
               <span className="navbar-toggler-icon"></span>
             </button>
             <div className="collapse navbar-collapse" id="navbarNavAltMarkup">

@@ -144,6 +144,13 @@ const TableDataComments = () => {
             <tr>
               <td colSpan="4">Fetching Comments...</td>
             </tr>
+          ) : comments.length === 0 ? (
+            <tr>
+              <td colSpan="4">
+                No comments found. Please wait for users to submit their
+                comments
+              </td>
+            </tr>
           ) : (
             table.getRowModel().rows.map((row) => (
               <tr key={row.id}>

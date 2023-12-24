@@ -158,6 +158,14 @@ const TableDataEvents = () => {
             <tr>
               <td colSpan="11">Fetching Events...</td>
             </tr>
+          ) : events.length === 0 ? (
+            <tr>
+              <td colSpan="11">
+                No events found. Currently, there are no scheduled events or
+                activities. Please check back later or consider creating new
+                events.
+              </td>
+            </tr>
           ) : (
             table.getRowModel().rows.map((row) => (
               <tr key={row.id}>

@@ -166,6 +166,13 @@ const TableDataOrders = () => {
             <tr>
               <td colSpan="10">Fetching Orders...</td>
             </tr>
+          ) : orders.length === 0 ? (
+            <tr>
+              <td colSpan="10">
+                No orders have been placed yet. Please wait for customers to
+                submit their orders.
+              </td>
+            </tr>
           ) : (
             table.getRowModel().rows.map((row) => (
               <tr key={row.id}>

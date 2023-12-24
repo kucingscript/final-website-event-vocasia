@@ -147,6 +147,13 @@ const TableDataUsers = () => {
             <tr>
               <td colSpan="6">Fetching Users...</td>
             </tr>
+          ) : users.length === 0 ? (
+            <tr>
+              <td colSpan="6">
+                No users found. It seems that no users have signed up yet.
+                Please wait for users to register.
+              </td>
+            </tr>
           ) : (
             table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
