@@ -1,5 +1,6 @@
 import React from "react";
 import { footerLinks } from "../constants";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const handleClick = (event) => {
@@ -9,9 +10,9 @@ const Footer = () => {
   return (
     <footer className="footer bg-navy">
       <div className="container">
-        <a href="index.html">
+        <Link to="/">
           <img src="/images/logo.svg" alt="nusantarafest-logo" />
-        </a>
+        </Link>
         <div className="mt-3 d-flex flex-row flex-wrap footer-content align-items-baseline">
           <p className="paragraph">
             NusantaraFest adalah tempat di mana{" "}
@@ -33,6 +34,7 @@ const Footer = () => {
         </div>
         <div className="d-flex justify-content-center paragraph all-rights">
           Build with &#9829; by Eventning - Vocasia FE 2
+          <p className="d-none">Build with ♥ by Kucingscript</p>
         </div>
       </div>
     </footer>

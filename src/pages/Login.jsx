@@ -104,7 +104,7 @@ const Login = () => {
                   />
                 </div>
               ))}
-              <div className="d-grid mt-2 gap-2">
+              <div className="d-grid mt-2 gap-3">
                 <button type="submit" className="btn-green">
                   {isLoading ? "Redirecting..." : "Sign In"}
                 </button>
