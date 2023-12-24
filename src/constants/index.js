@@ -42,19 +42,19 @@ export const footerLinks = [
   {
     title: "Features",
     links: [
-      { label: "Virtual" },
-      { label: "Pricing" },
-      { label: "Merchant" },
-      { label: "Tickets" },
+      { label: "Cloud Firestore" },
+      { label: "User Authentication" },
+      { label: "Live Query" },
+      { label: "Image Uploader" },
     ],
   },
   {
-    title: "Company",
+    title: "Tools",
     links: [
-      { label: "Jobs" },
-      { label: "API" },
-      { label: "Press" },
-      { label: "Sitemap" },
+      { label: "Auth" },
+      { label: "QrCode" },
+      { label: "Canvas" },
+      { label: "Routes" },
     ],
   },
   {

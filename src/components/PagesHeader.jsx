@@ -3,10 +3,16 @@ import { headerLists } from "../constants";
 import { useEffect, useState } from "react";
 import { auth } from "../config/firebase";
 import { useUserCredentials } from "../context";
+import { ModalOrders } from ".";
 
 const PagesHeader = () => {
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const [activeIndex, setActiveIndex] = useState(null);
-  const [userRole, setUserRole, isLogin] = useUserCredentials();
+  const [userRole, setUserRole, isLogin, , , orders, setOrders] =
+    useUserCredentials();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -23,6 +29,7 @@ const PagesHeader = () => {
       try {
         await auth.signOut();
         setUserRole("");
+        setOrders({});
         navigate("/login");
       } catch (error) {
         console.error(error.message);
@@ -54,15 +61,31 @@ const PagesHeader = () => {
             <div className="navbar-nav mx-auto my-3 my-lg-0">
               {headerLists.map((header, index) => (
                 <Link
-                  to={header.target}
+                  key={index}
                   className={`nav-link ${
                     index === activeIndex ? "active" : ""
                   }`}
-                  key={index}
+                  to={header.target}
                 >
                   {header.label}
                 </Link>
               ))}
+
+              {orders.length !== 0 ? (
+                <>
+                  <div
+                    onClick={handleShow}
+                    className="nav-link"
+                    style={{ cursor: "pointer" }}
+                  >
+                    My Order
+                  </div>
+                  <ModalOrders show={show} handleClose={handleClose} />
+                </>
+              ) : (
+                ""
+              )}
+
               {+userRole === 1 ? (
                 <Link className="nav-link" to={"/admin/dashboard"}>
                   Admin

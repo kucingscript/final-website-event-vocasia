@@ -15,9 +15,10 @@ const Footer = () => {
         </Link>
         <div className="mt-3 d-flex flex-row flex-wrap footer-content align-items-baseline">
           <p className="paragraph">
-            NusantaraFest adalah tempat di mana{" "}
-            <br className="d-md-block d-none" /> anda dapat mencari event sesuai{" "}
-            <br className="d-md-block d-none" /> dengan minat & preferensi.
+            NusantaraFest adalah panggung keindahan dimana
+            <br className="d-md-block d-none" /> minat dan preferensi bertemu
+            dalam harmoni, <br className="d-md-block d-none" /> menciptakan
+            pengalaman yang tak terlupakan.
           </p>
           {footerLinks.map((foots, index1) => (
             <div className="d-flex flex-column footer-links" key={index1}>

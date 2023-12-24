@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { ShowNotification } from "../components";
 import { auth } from "../config/firebase";

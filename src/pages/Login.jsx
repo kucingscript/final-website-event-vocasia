@@ -1,10 +1,14 @@
 import { Link } from "react-router-dom";
-import { BottomLogo, ShowNotification } from "../components";
+import {
+  BottomLogo,
+  Footer,
+  ModalForgotPassword,
+  ShowNotification,
+} from "../components";
 import { headerLists, loginForms } from "../constants";
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../config/firebase";
-import ModalForgotPassword from "../components/ModalForgotPassword";
 
 const Login = () => {
   const [show, setShow] = useState(false);
@@ -135,6 +139,7 @@ const Login = () => {
       </section>
 
       <BottomLogo />
+      <Footer />
     </>
   );
 };

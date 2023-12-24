@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { BottomLogo, PagesHeader, ShowNotification } from "../components";
+import {
+  BottomLogo,
+  Footer,
+  PagesHeader,
+  ShowNotification,
+} from "../components";
 import { registerForms } from "../constants";
 import {
   createUserWithEmailAndPassword,
@@ -8,14 +13,17 @@ import {
 import { DB, auth } from "../config/firebase";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
+import { useUserCredentials } from "../context";
 
 const Register = () => {
   const [datas, setDatas] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const [, , , , , , setOrders] = useUserCredentials();
 
   const signOut = async () => {
     await auth.signOut();
+    setOrders([]);
   };
 
   useEffect(() => {
@@ -120,10 +128,21 @@ const Register = () => {
                   </div>
                 ))}
 
-                <div className="d-grid mt-2">
+                <div className="d-grid mt-2 gap-2">
                   <button type="submit" className="btn-green">
                     {isLoading ? "Please wait..." : "Sign Up"}
                   </button>
+                  <div>
+                    Already have an account?
+                    <span
+                      className="text-primary"
+                      onClick={() => navigate("/login")}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {" "}
+                      Sign In
+                    </span>
+                  </div>
                 </div>
               </form>
             </div>
@@ -132,6 +151,7 @@ const Register = () => {
       </section>
 
       <BottomLogo />
+      <Footer />
     </>
   );
 };

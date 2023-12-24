@@ -18,7 +18,7 @@ import {
 } from "./pages";
 import ProtectedRoutes from "./lib/ProtectedRoutes";
 import { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, or, query, where } from "firebase/firestore";
 import { DB, auth } from "./config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import AdminRoutes from "./lib/AdminRoutes";
@@ -30,17 +30,33 @@ const App = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [userCredentials, setUserCredentials] = useState({});
   const [userIsLoading, setUserIsLoading] = useState(false);
+  const [orders, setOrders] = useState([]);
 
   const fetchUserData = async (email) => {
     try {
       setUserIsLoading(true);
-      const q = query(collection(DB, "users"), where("email", "==", email));
-      const querySnapshot = await getDocs(q);
 
-      if (!querySnapshot.empty) {
-        const userData = querySnapshot.docs[0].data();
+      const userQuery = query(
+        collection(DB, "users"),
+        where("email", "==", email)
+      );
+      const orderQuery = query(
+        collection(DB, "orders"),
+        where("email", "==", email)
+      );
+
+      const userQuerySnapshot = await getDocs(userQuery);
+      const orderQuerySnapshot = await getDocs(orderQuery);
+
+      if (!userQuerySnapshot.empty) {
+        const userData = userQuerySnapshot.docs[0].data();
         setUserCredentials(userData);
         setUserRole(userData.role);
+      }
+
+      if (!orderQuerySnapshot.empty) {
+        const orderData = orderQuerySnapshot.docs.map((doc) => doc.data());
+        setOrders(orderData);
       }
 
       setUserIsLoading(false);
@@ -69,7 +85,15 @@ const App = () => {
 
   return (
     <UserContext.Provider
-      value={[userRole, setUserRole, isLogin, userCredentials, userIsLoading]}
+      value={[
+        userRole,
+        setUserRole,
+        isLogin,
+        userCredentials,
+        userIsLoading,
+        orders,
+        setOrders,
+      ]}
     >
       <Routes>
         <Route path="/" element={<Home />} />
