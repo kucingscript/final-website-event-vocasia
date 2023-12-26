@@ -16,6 +16,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { dateFormatter } from "../utils";
 import { useUserCredentials } from "../context";
 import Swal from "sweetalert2";
+import moment from "moment";
 
 const EventCheckout = () => {
   const [show, setShow] = useState(false);
@@ -23,11 +24,13 @@ const EventCheckout = () => {
   const handleShow = () => setShow(true);
 
   const { id } = useParams();
-  const navigate = useNavigate();
   const [event, setEvent] = useState({});
   const [order, setOrder] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [, , , userCredentials] = useUserCredentials();
+
+  const navigate = useNavigate();
+  const currentDate = moment().format("YYYY-MM-DD");
 
   const fetchEventById = async () => {
     try {
@@ -41,6 +44,15 @@ const EventCheckout = () => {
           ...docSnapshot.data(),
         };
         setEvent(eventData);
+
+        if (moment(eventData.event_date).isBefore(currentDate)) {
+          ShowNotification({
+            title: "Event Warning",
+            text: "We're sorry, but this event has already taken place and is no longer available.",
+            icon: "warning",
+          });
+          navigate("/");
+        }
       } else {
         ShowNotification({
           title: "Event Not Found",

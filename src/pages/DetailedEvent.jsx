@@ -11,12 +11,15 @@ import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { DB } from "../config/firebase";
 import { dateFormatter } from "../utils";
+import moment from "moment";
 
 const DetailedEvent = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [event, setEvent] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const currentDate = moment().format("YYYY-MM-DD");
 
   const fetchEventById = async () => {
     try {
@@ -30,6 +33,15 @@ const DetailedEvent = () => {
           ...docSnapshot.data(),
         };
         setEvent(eventData);
+
+        if (moment(eventData.event_date).isBefore(currentDate)) {
+          ShowNotification({
+            title: "Event Warning",
+            text: "We're sorry, but this event has already taken place and is no longer available.",
+            icon: "warning",
+          });
+          navigate("/");
+        }
       } else {
         ShowNotification({
           title: "Event Not Found",
@@ -38,6 +50,7 @@ const DetailedEvent = () => {
         });
         navigate("/");
       }
+
       setIsLoading(false);
     } catch (error) {
       setIsLoading(false);

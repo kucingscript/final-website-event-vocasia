@@ -1,14 +1,18 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ShowNotification } from "../components";
 import { collection, getDocs, limit, query } from "firebase/firestore";
 import { DB } from "../config/firebase";
 import { dateFormatter } from "../utils";
+import moment from "moment";
 
 const FeaturedEvents = ({ text }) => {
   const [events, setEvents] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [eventsLimit, setEventsLimit] = useState(false);
+
+  const navigate = useNavigate();
+  const currentDate = moment().format("YYYY-MM-DD");
 
   const fetchEventsData = async () => {
     try {
@@ -38,6 +42,18 @@ const FeaturedEvents = ({ text }) => {
     fetchEventsData();
   }, [eventsLimit]);
 
+  const handleEventClick = (id, event_date) => {
+    if (moment(event_date).isBefore(currentDate)) {
+      ShowNotification({
+        title: "Event Warning",
+        text: "We're sorry, but this event has already taken place and is no longer available.",
+        icon: "warning",
+      });
+      return;
+    }
+    navigate(`/events/${id}`);
+  };
+
   return (
     <section className="grow-today">
       <div className="container">
@@ -59,7 +75,11 @@ const FeaturedEvents = ({ text }) => {
                 speaker_occupation,
               } = event;
               return (
-                <div className="col-lg-3 col-md-6 col-12" key={index}>
+                <div
+                  className="col-lg-3 col-md-6 col-12"
+                  key={index}
+                  style={{ cursor: "pointer" }}
+                >
                   <div className="card-grow h-100">
                     <span className="badge-pricing">{event_price} K</span>
                     <img src={event_images} alt={event_title} />
@@ -69,10 +89,10 @@ const FeaturedEvents = ({ text }) => {
                       <div className="description">
                         {event_place}, {dateFormatter(event_date)}
                       </div>
-                      <Link
-                        to={`/events/${event.id}`}
+                      <div
+                        onClick={() => handleEventClick(event.id, event_date)}
                         className="stretched-link"
-                      ></Link>
+                      ></div>
                     </div>
                   </div>
                 </div>
