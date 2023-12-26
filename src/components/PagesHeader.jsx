@@ -29,7 +29,7 @@ const PagesHeader = () => {
       try {
         await auth.signOut();
         setUserRole("");
-        setOrders({});
+        setOrders([]);
         navigate("/login");
       } catch (error) {
         console.error(error.message);

@@ -19,9 +19,9 @@ const Hero = ({ btnText }) => {
       </div>
 
       <div className="d-flex flex-row flex-nowrap justify-content-center align-items-center gap-5 header-image">
-        <img src="/images/1.png" alt="nusantarafest-1" className="img-1" />
-        <img src="/images/2.png" alt="nusantarafest-2" className="img-2" />
-        <img src="/images/1.png" alt="nusantarafest-3" className="img-1" />
+        <img src="/images/1.webp" alt="nusantarafest-1" className="img-1" />
+        <img src="/images/2.webp" alt="nusantarafest-2" className="img-2" />
+        <img src="/images/1.webp" alt="nusantarafest-3" className="img-1" />
       </div>
     </>
   );
