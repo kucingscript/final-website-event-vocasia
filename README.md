@@ -1,8 +1,13 @@
-# React + Vite
+# NusantaraFest
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+```
+Panggung keindahan dimana minat dan preferensi bertemu dalam harmoni, menciptakan pengalaman yang tak terlupakan.
+```
 
-Currently, two official plugins are available:
+## Build with ❤️ by
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [x] Ar Rasyid Sarifullah G. ~ [kucingscript](https://github.com/kucingscript/)
+- [x] Bayu Ragil Pangestu ~ [BayuRagilPangestu](https://github.com/BayuRagilPangestu)
+- [x] M. Irhasul Hafie S. ~ [irhasulhafie](https://github.com/irhasulhafie)
+- [x] Satria Rhama Dwi Jaya ~ [satriacoding](https://github.com/satriacoding)
+- [x] Triana Surya Pratiwi ~ [Trianasp](https://github.com/Trianasp)
