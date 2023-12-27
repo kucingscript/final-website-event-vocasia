@@ -34,7 +34,10 @@ const DetailedEvent = () => {
         };
         setEvent(eventData);
 
-        if (moment(eventData.event_date).isBefore(currentDate)) {
+        if (
+          moment(eventData.event_date).isBefore(currentDate) ||
+          moment(eventData.event_date).isSame(currentDate)
+        ) {
           ShowNotification({
             title: "Event Warning",
             text: "We're sorry, but this event has already taken place and is no longer available.",

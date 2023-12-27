@@ -43,7 +43,10 @@ const FeaturedEvents = ({ text }) => {
   }, [eventsLimit]);
 
   const handleEventClick = (id, event_date) => {
-    if (moment(event_date).isBefore(currentDate)) {
+    if (
+      moment(event_date).isBefore(currentDate) ||
+      moment(event_date).isSame(currentDate)
+    ) {
       ShowNotification({
         title: "Event Warning",
         text: "We're sorry, but this event has already taken place and is no longer available.",
