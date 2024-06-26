@@ -40,30 +40,30 @@ export const stories = [
 
 export const footerLinks = [
   {
-    title: "Features",
+    title: "Taka",
     links: [
-      { label: "Cloud Firestore" },
-      { label: "User Authentication" },
-      { label: "Live Query" },
-      { label: "Image Uploader" },
+      { label: "Diki" },
+      { label: "Prasetyo" },
+      { label: "0037" },
+      { label: "Kempot" },
     ],
   },
   {
-    title: "Tools",
+    title: "7Werno",
     links: [
-      { label: "Auth" },
-      { label: "QrCode" },
-      { label: "Canvas" },
-      { label: "Routes" },
+      { label: "Alfino" },
+      { label: "Wahyu" },
+      { label: "0085" },
+      { label: "Pramudya" },
     ],
   },
   {
-    title: "Learn",
+    title: "Kucingscript",
     links: [
-      { label: "Guidebook" },
-      { label: "Inspiration" },
-      { label: "Community" },
-      { label: "Tools" },
+      { label: "Ar Rasyid" },
+      { label: "Sarifullah" },
+      { label: "0152" },
+      { label: "Maeng" },
     ],
   },
 ];

@@ -25,7 +25,7 @@ const Footer = () => {
               <div className="title-links mb-3">{foots.title}</div>
               {foots.links.map((foots, index2) => (
                 <React.Fragment key={index2}>
-                  <a href="#" onClick={handleClick}>
+                  <a href="#" onClick={handleClick} className="pe-none">
                     {foots.label}
                   </a>
                 </React.Fragment>
@@ -34,7 +34,7 @@ const Footer = () => {
           ))}
         </div>
         <div className="d-flex justify-content-center paragraph all-rights">
-          Build with &#9829; by Eventning - Vocasia FE 2
+          Build with &#9829; by NusantaraFest Team
           <p className="d-none">Build with ♥ by Kucingscript</p>
         </div>
       </div>
