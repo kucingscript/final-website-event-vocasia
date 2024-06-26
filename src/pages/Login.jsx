@@ -64,9 +64,9 @@ const Login = () => {
       <section className="bg-navy pt-2">
         <nav className="container navbar navbar-expand-lg navbar-dark">
           <div className="container-fluid">
-            <a className="navbar-brand" href="index.html">
+            <Link className="navbar-brand" to={"/"}>
               <img src="/images/logo.svg" alt="nusantarafest-logo" />
-            </a>
+            </Link>
             <button
               className="navbar-toggler"
               type="button"
