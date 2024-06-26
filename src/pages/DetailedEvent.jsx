@@ -105,7 +105,7 @@ const DetailedEvent = () => {
               </div>
 
               <div className="d-flex flex-column card-event">
-                <h6>Your Speaker</h6>
+                <h6>Special Guest</h6>
                 <div className="d-flex align-items-center gap-3 mt-3">
                   <div>
                     <div className="speaker-name">{event.speaker_name}</div>
