@@ -40,30 +40,30 @@ export const stories = [
 
 export const footerLinks = [
   {
-    title: "Taka",
+    title: "NusantaraFest",
     links: [
-      { label: "Diki" },
-      { label: "Prasetyo" },
-      { label: "0037" },
-      { label: "Kempot" },
+      { label: "Lorem" },
+      { label: "Ipsum" },
+      { label: "Dolor" },
+      { label: "Sit" },
     ],
   },
   {
-    title: "7Werno",
+    title: "NusantaraFest",
     links: [
-      { label: "Alfino" },
-      { label: "Wahyu" },
-      { label: "0085" },
-      { label: "Pramudya" },
+      { label: "Lorem" },
+      { label: "Ipsum" },
+      { label: "Dolor" },
+      { label: "Sit" },
     ],
   },
   {
-    title: "Kucingscript",
+    title: "NusantaraFest",
     links: [
-      { label: "Ar Rasyid" },
-      { label: "Sarifullah" },
-      { label: "0152" },
-      { label: "Maeng" },
+      { label: "Lorem" },
+      { label: "Ipsum" },
+      { label: "Dolor" },
+      { label: "Sit" },
     ],
   },
 ];
